@@ -1,0 +1,7 @@
+flask
+paramiko
+requests
+cryptography
+pyinstaller
+pyinstaller-hooks-contrib
+pytest
