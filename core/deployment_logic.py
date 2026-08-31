@@ -857,6 +857,21 @@ if [ -f "$CONFIG_TXT" ]; then
     log "Konfiguracja UART i I2C wgrana do $CONFIG_TXT. Wymagany restart RPi!"
 fi
 
+log "[Extra] Configuring Simultaneous AP+STA Virtual Wi-Fi Interface (uap0)..."
+sudo iw dev wlan0 interface add uap0 type __ap 2>/dev/null || true
+if [ -f /etc/rc.local ]; then
+    if ! grep -q "uap0" /etc/rc.local; then
+        sudo sed -i '/exit 0/i iw dev wlan0 interface add uap0 type __ap 2>/dev/null || true' /etc/rc.local
+    fi
+else
+    sudo bash -c 'cat << "EOF" > /etc/rc.local
+#!/bin/bash
+iw dev wlan0 interface add uap0 type __ap 2>/dev/null || true
+exit 0
+EOF'
+    sudo chmod +x /etc/rc.local
+fi
+
 if [ ! -z "$NEW_SSH_PASS" ]; then
     echo "$USER_NAME:$NEW_SSH_PASS" | sudo chpasswd
     log "SSH password changed."
@@ -1314,11 +1329,11 @@ def run_full_deployment(
                     if line.strip():
                         log_func(line, "normal")
 
-                        # Auto-send sudo password if requested
-                        if "[sudo] password for" in line and not sent_pass and password:
+                        # Auto-send sudo password if requested (handle multiple requests e.g. after date change)
+                        if "[sudo] password for" in line and password:
                             log_func("Auto-sending sudo password...", "verbose")
                             channel.send(password + "\n")
-                            sent_pass = True
+                            time.sleep(0.1)
 
                         match = re.search(r"\[Step (\d+)/(\d+)\]", line)
                         if match:
@@ -1636,11 +1651,11 @@ echo "[HOT] ✅ HOT DEPLOY COMPLETED SUCCESSFULLY!"
                     if line.strip():
                         log_func(line, "normal")
 
-                        # Auto-send sudo password if requested
-                        if "[sudo] password for" in line and not sent_pass and password:
+                        # Auto-send sudo password if requested (handle multiple requests)
+                        if "[sudo] password for" in line and password:
                             log_func("Auto-sending sudo password for hot deploy...", "verbose")
                             channel.send(password + "\n")
-                            sent_pass = True
+                            time.sleep(0.1)
 
                         if "[HOT] Copying" in line:
                             progress_callback(65)
