@@ -1,5 +1,8 @@
 # RCSIM RPi5 Deployment Tool
 
+> 🌐 **Language / Język:** **English** | [Polski](README_PL.md)
+
+
 Deployment utility for the **RCSIM (Race Ready Autonomous System)** software stack targeting Raspberry Pi 5 single-board computers equipped with Hailo-8L accelerators. The application provides a modern web browser interface (Web GUI) powered by Flask, alongside a legacy Tkinter-based fallback interface.
 
 ---

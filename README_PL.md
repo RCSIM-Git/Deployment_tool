@@ -1,5 +1,8 @@
 # RCSIM RPi5 Deployment Tool - Narzędzie Wdrożeniowe
 
+> 🌐 **Language / Język:** [English](README.md) | **Polski**
+
+
 Narzędzie wdrożeniowe dla stosu oprogramowania **RCSIM (Race Ready Autonomous System)** na komputery jednopłytkowe Raspberry Pi 5 z akceleratorem Hailo-8L. Aplikacja udostępnia nowoczesny interfejs graficzny w przeglądarce (Web GUI) oparty na technologii Flask oraz opcjonalny interfejs legacy oparty na Tkinter.
 
 ---
@@ -8,12 +11,12 @@ Narzędzie wdrożeniowe dla stosu oprogramowania **RCSIM (Race Ready Autonomous 
 1. [Główne Funkcje](#-główne-funkcje)
 2. [Wymagania i Zależności](#-wymagania-i-zależności)
 3. [Struktura Projektu](#-struktura-projektu)
-4. [Proces Budowania Aplikacji (Build Process)](#-proces-budowania-aplikacji-build-process)
-5. [Konfiguracja (Configuration)](#-konfiguracja-configuration)
+4. [Proces Budowania Aplikacji](#-proces-budowania-aplikacji-build-process)
+5. [Konfiguracja](#-konfiguracja-configuration)
    - [Struktura pliku deployment_settings.json](#struktura-pliku-deployment_settingsjson)
    - [Parametry Połączenia i SSH](#parametry-połączenia-i-ssh)
    - [Konfiguracja RTK & NTRIP](#konfiguracja-rtk--ntrip)
-   - [Konfiguracja Sprzętowa (Hardware)](#konfiguracja-sprzętowa-hardware)
+   - [Konfiguracja Sprzętowa](#konfiguracja-sprzętowa-hardware)
    - [Komunikacja i MAVLink](#komunikacja-i-mavlink)
 6. [Instrukcja Użycia](#-instrukcja-użycia)
 
@@ -21,7 +24,7 @@ Narzędzie wdrożeniowe dla stosu oprogramowania **RCSIM (Race Ready Autonomous 
 
 ## 🚀 Główne Funkcje
 
-*   **Automatyczne Wdrażanie (Automated Deployment):** Archiwizacja lokalnego projektu źródłowego, bezpieczny transfer SFTP na Raspberry Pi 5, automatyczne budowanie kontenerów Docker oraz uruchamianie usług systemowych.
+*   **Automatyczne Wdrażanie:** Archiwizacja lokalnego projektu źródłowego, bezpieczny transfer SFTP na Raspberry Pi 5, automatyczne budowanie kontenerów Docker oraz uruchamianie usług systemowych.
 *   **Zarządzanie Połączeniem SSH:** Obsługa tradycyjnego logowania hasłem oraz kluczami SSH (w tym passphrase do klucza prywatnego).
 *   **Zaawansowana Konfiguracja Sprzętowa:** Bezpośrednie ustawianie sterowników IMU, portów oraz prędkości transmisji (baudrate) dla GPS, LiDAR i odbiornika ELRS z poziomu Web GUI.
 *   **Integracja RTK / NTRIP:** Pełna parametryzacja stacji bazowych NTRIP i poprawek RTK dla precyzyjnego pozycjonowania GPS.
@@ -68,7 +71,7 @@ RCSIM_deployment_tool/
 
 ---
 
-## 🏗️ Proces Budowania Aplikacji (Build Process)
+## 🏗️ Proces Budowania Aplikacji
 
 Aplikacja wdrożeniowa RCSIM może zostać skompilowana do pojedynczego, niezależnego pliku wykonywalnego `.exe` dla systemu Windows. Eliminuje to konieczność posiadania zainstalowanego środowiska Python na maszynie operatora.
 
@@ -85,7 +88,7 @@ Aplikacja wdrożeniowa RCSIM może zostać skompilowana do pojedynczego, niezale
 
 ---
 
-## ⚙️ Konfiguracja (Configuration)
+## ⚙️ Konfiguracja
 
 Wszystkie parametry wdrożenia i ustawień sprzętowych są przechowywane w pliku **`core/deployment_settings.json`** (lub bezpośrednio obok pliku `.exe` po skompilowaniu).
 
@@ -150,7 +153,7 @@ Poniżej znajduje się domyślny szablon konfiguracji:
 *   `ntrip_user` / `ntrip_pass`: Dane uwierzytelniające klienta NTRIP.
 *   `ntrip_mount`: Nazwa punktu montowania stacji referencyjnej (Mountpoint).
 
-### Konfiguracja Sprzętowa (Hardware)
+### Konfiguracja Sprzętowa
 *   `imu_driver`: Sterownik jednostki IMU (np. `native_bmx160_bmp388`, `native_mpu9250`).
 *   `gps_enabled` / `gps_port` / `gps_baudrate`: Włączenie i parametry magistrali UART dla odbiornika GPS.
 *   `lidar_enabled` / `lidar_port` / `lidar_baudrate`: Włączenie i parametry komunikacji LiDAR.
